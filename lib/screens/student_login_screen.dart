@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quick_exit/screens/admin_login_screen.dart';
+import 'package:quick_exit/screens/gate_pass_request.dart';
 
 class StudentLogin extends StatefulWidget {
   const StudentLogin({super.key});
@@ -12,9 +13,6 @@ class _StudentLoginState extends State<StudentLogin> {
   TextEditingController enrollmentController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  String enrollmentError = "";
-  String passwordError = "";
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,26 +24,16 @@ class _StudentLoginState extends State<StudentLogin> {
             TextField(
               controller: enrollmentController,
               decoration: InputDecoration(
-                  hintText: "Enrollment Number",
-                  labelText: "Enrollment Number",
-                  prefixIcon: Icon(
-                    Icons.person,
+                hintText: "Enrollment Number",
+                labelText: "Enrollment Number",
+                prefixIcon: Icon(
+                  Icons.person,
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(2),
                   ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(2),
-                    ),
-                    borderSide: BorderSide(
-                        color: enrollmentController.text.isEmpty
-                            ? Colors.red
-                            : Colors.transparent),
-                  )),
-            ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                enrollmentError,
-                style: TextStyle(color: Colors.red),
+                ),
               ),
             ),
             SizedBox(
@@ -63,20 +51,7 @@ class _StudentLoginState extends State<StudentLogin> {
                   borderRadius: BorderRadius.all(
                     Radius.circular(2),
                   ),
-                  borderSide: BorderSide(
-                    color: passwordController.text.isEmpty
-                        ? Colors.red
-                        : Colors.transparent,
-                    width: 2,
-                  ),
                 ),
-              ),
-            ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                passwordError,
-                style: TextStyle(color: Colors.red),
               ),
             ),
             SizedBox(
@@ -85,34 +60,17 @@ class _StudentLoginState extends State<StudentLogin> {
             ElevatedButton(
               onPressed: () {
                 setState(() {
-                  if (enrollmentController.text.isEmpty) {
-                    enrollmentError = "Enrollment Number is required";
-                    borderSide: BorderSide(
-                    color: Colors.red
-                    width: 2,
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => GatePassRequest(),
+                    ),
                   );
-                  } else {
-                    enrollmentError = "";
-                    borderSide: BorderSide(
-                    color: Colors.transparent
-                    width: 2,),
-                  }
-                  if (passwordController.text.isEmpty) {
-                    passwordError = "Password is required";
-                    borderSide: BorderSide(
-                    color: Colors.red
-                    width: 2,);
-                  } else {
-                    passwordError = "";
-                    borderSide: BorderSide(
-                    color: Colors.transparent
-                    width: 2,);
-                  }
                 });
               },
               child: Text("Login"),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.purple,
+                backgroundColor: Colors.purple.shade700,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
