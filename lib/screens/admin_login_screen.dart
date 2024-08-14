@@ -23,14 +23,17 @@ class _AdminLoginState extends State<AdminLogin> {
             TextField(
               controller: employeeIdController,
               decoration: InputDecoration(
-                  hintText: "Employee ID",
-                  labelText: "Employee ID",
-                  prefixIcon: Icon(
-                    Icons.person,
+                hintText: "Employee ID",
+                labelText: "Employee ID",
+                prefixIcon: Icon(
+                  Icons.person,
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(2),
                   ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(2)),
-                  )),
+                ),
+              ),
             ),
             SizedBox(
               height: 25,
@@ -38,14 +41,17 @@ class _AdminLoginState extends State<AdminLogin> {
             TextField(
               controller: passwordController,
               decoration: InputDecoration(
-                  hintText: "Password",
-                  labelText: "Password",
-                  prefixIcon: Icon(
-                    Icons.lock,
+                hintText: "Password",
+                labelText: "Password",
+                prefixIcon: Icon(
+                  Icons.lock,
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(2),
                   ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(2)),
-                  )),
+                ),
+              ),
             ),
             SizedBox(
               height: 45,
@@ -54,7 +60,7 @@ class _AdminLoginState extends State<AdminLogin> {
               onPressed: () {},
               child: Text("Login"),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.purple,
+                backgroundColor: Colors.purple.shade700,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
