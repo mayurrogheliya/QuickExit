@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quick_exit/screens/gate_pass_request.dart';
 import 'package:quick_exit/screens/student_login_screen.dart';
 
 void main() {
@@ -15,26 +16,6 @@ class MyApp extends StatelessWidget {
       home: StudentLogin(),
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.purple),
-        // inputDecorationTheme: InputDecorationTheme(
-        //   enabledBorder: OutlineInputBorder(
-        //     borderRadius: BorderRadius.all(
-        //       Radius.circular(2),
-        //     ),
-        //     borderSide: BorderSide(
-        //       color: Colors.grey,
-        //       width: 1.0,
-        //     ),
-        //   ),
-        //   focusedBorder: OutlineInputBorder(
-        //     borderRadius: BorderRadius.all(
-        //       Radius.circular(2),
-        //     ),
-        //     borderSide: BorderSide(
-        //       color: Colors.,
-        //       width: 2.0,
-        //     ),
-        //   ),
-        // ),
       ),
     );
   }
