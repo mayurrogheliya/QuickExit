@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:quick_exit/screens/WaveClipper.dart';
-import 'package:quick_exit/screens/guard_login_screen.dart';
+import 'package:quick_exit/screens/student_login_screen.dart';
 
-class StudentLogin extends StatefulWidget {
+class GuardLogin extends StatefulWidget {
   @override
-  State<StudentLogin> createState() => _StudentLoginState();
+  State<GuardLogin> createState() => _GuardLoginState();
 }
 
-class _StudentLoginState extends State<StudentLogin> {
-  final TextEditingController _enrollmentController = TextEditingController();
+class _GuardLoginState extends State<GuardLogin> {
+  final TextEditingController _employeeController = TextEditingController();
 
   final TextEditingController _passwordController = TextEditingController();
 
@@ -75,9 +75,9 @@ class _StudentLoginState extends State<StudentLogin> {
                 children: [
                   //Enrollment number input field
                   TextField(
-                    controller: _enrollmentController,
+                    controller: _employeeController,
                     decoration: InputDecoration(
-                      labelText: 'Enrollment Number',
+                      labelText: 'Employee ID',
                       labelStyle: TextStyle(color: Colors.grey),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
@@ -131,12 +131,12 @@ class _StudentLoginState extends State<StudentLogin> {
                   ),
                   SizedBox(height: 20),
 
-                  //Employee Login Button
+                  //Student Login Button
                   ElevatedButton(
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => GuardLogin()),
+                        MaterialPageRoute(builder: (context) => StudentLogin()),
                       );
                     },
                     style: ElevatedButton.styleFrom(
@@ -148,7 +148,7 @@ class _StudentLoginState extends State<StudentLogin> {
                         borderRadius: BorderRadius.circular(15),
                       ),
                     ),
-                    child: Text('Employee Login'),
+                    child: Text('Student Login'),
                   ),
                 ],
               ),
