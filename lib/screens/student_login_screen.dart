@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quick_exit/screens/RequestGatePassScreen.dart';
 import 'package:quick_exit/screens/WaveClipper.dart';
 import 'package:quick_exit/screens/guard_login_screen.dart';
 
@@ -117,7 +118,13 @@ class _StudentLoginState extends State<StudentLogin> {
 
                   //Login Button
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => RequestGatePassScreen()),
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xFFFF3B30),
                       foregroundColor: Colors.white,
