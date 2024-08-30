@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quick_exit/screens/gate_pass_request.dart';
 import 'package:quick_exit/screens/guard_login_screen.dart';
 import 'package:quick_exit/screens/splash_screen.dart';
-import 'package:quick_exit/screens/student_login_screen.dart';
+import 'package:quick_exit/screens/StudentLogin.dart';
 
 void main() {
   runApp(MyApp());

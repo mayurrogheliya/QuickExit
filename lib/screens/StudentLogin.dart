@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quick_exit/screens/RequestGatePassScreen.dart';
+import 'package:quick_exit/screens/StudentNavBar.dart';
 import 'package:quick_exit/screens/WaveClipper.dart';
 import 'package:quick_exit/screens/guard_login_screen.dart';
 
@@ -122,7 +123,7 @@ class _StudentLoginState extends State<StudentLogin> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => RequestGatePassScreen()),
+                            builder: (context) => StudentNavbar()),
                       );
                     },
                     style: ElevatedButton.styleFrom(
