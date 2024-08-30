@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quick_exit/screens/WaveClipper.dart';
-import 'package:quick_exit/screens/student_login_screen.dart';
+import 'package:quick_exit/screens/StudentLogin.dart';
 
 class GuardLogin extends StatefulWidget {
   @override

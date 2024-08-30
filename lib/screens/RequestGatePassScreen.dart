@@ -13,6 +13,7 @@ class _RequestGatePassScreenState extends State<RequestGatePassScreen> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    TextEditingController _reason_controller = new TextEditingController();
 
     return SafeArea(
       child: Scaffold(
@@ -107,7 +108,7 @@ class _RequestGatePassScreenState extends State<RequestGatePassScreen> {
                             suffixIcon: Icon(Icons.clear),
                           ),
                         ),
-                        SizedBox(height: 35), // Reduced height
+                        SizedBox(height: 35),
 
                         // Exit Date input field with date picker
                         TextField(
@@ -139,10 +140,11 @@ class _RequestGatePassScreenState extends State<RequestGatePassScreen> {
                                 : "",
                           ),
                         ),
-                        SizedBox(height: 35), // Reduced height
+                        SizedBox(height: 35),
 
                         // Reason for Moving Out input field
                         TextField(
+                          controller: _reason_controller,
                           decoration: InputDecoration(
                             labelText: 'Reason for Moving Out',
                             border: OutlineInputBorder(
@@ -175,25 +177,6 @@ class _RequestGatePassScreenState extends State<RequestGatePassScreen> {
               ),
             ],
           ),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: const Color.fromARGB(255, 2, 20, 35),
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.badge),
-              label: 'Request GatePass',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.history),
-              label: 'History',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Profile',
-            ),
-          ],
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.white70,
         ),
       ),
     );
