@@ -38,7 +38,7 @@ class _RequestGatePassScreenState extends State<RequestGatePassScreen> {
                         'Request Your Gate Pass',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 26, // Reduced font size
+                          fontSize: 26, 
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -47,7 +47,7 @@ class _RequestGatePassScreenState extends State<RequestGatePassScreen> {
                         'Choose your leave type and get approval from \nthe right authority',
                         style: TextStyle(
                           color: Colors.white70,
-                          fontSize: 15, // Reduced font size
+                          fontSize: 15,
                           fontStyle: FontStyle.italic,
                         ),
                       ),
