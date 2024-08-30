@@ -12,7 +12,6 @@ class _RequestGatePassScreenState extends State<RequestGatePassScreen> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
     TextEditingController _reason_controller = new TextEditingController();
 
     return SafeArea(
@@ -38,7 +37,7 @@ class _RequestGatePassScreenState extends State<RequestGatePassScreen> {
                         'Request Your Gate Pass',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 26, 
+                          fontSize: 26,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
