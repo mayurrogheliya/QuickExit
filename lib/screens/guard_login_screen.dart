@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quick_exit/screens/GuardNavBar.dart';
 import 'package:quick_exit/screens/WaveClipper.dart';
 import 'package:quick_exit/screens/StudentLogin.dart';
 
@@ -117,7 +118,12 @@ class _GuardLoginState extends State<GuardLogin> {
 
                   //Login Button
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => GuardNavBar()),
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xFFFF3B30),
                       foregroundColor: Colors.white,
