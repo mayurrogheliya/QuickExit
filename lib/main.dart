@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       routes: {
         '/': (context) => SplashScreen(),
-        '/Guard_Screens': (context) => Issuegatepass(),
+        '/Guard_Screens': (context) => IssueGatePass(),
       },
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
