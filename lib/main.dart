@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:quick_exit/screens/Guard_Screens/IssueGatepass.dart';
+import 'package:quick_exit/screens/GuardNavBar.dart';
+import 'package:quick_exit/screens/Guard_Screens/IssueGatePass.dart';
+import 'package:quick_exit/screens/StudentLogin.dart';
 import 'package:quick_exit/screens/StudentNavBar.dart';
 import 'package:quick_exit/screens/splash_screen.dart';
 // import 'package:quick_exit/screens/StudentLogin.dart';
@@ -16,7 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       routes: {
         '/': (context) => SplashScreen(),
-        '/Guard_Screens': (context) => IssueGatePass(),
+        '/loginscreen': (context) => StudentLogin(),
       },
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
