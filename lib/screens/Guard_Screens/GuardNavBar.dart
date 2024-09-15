@@ -13,9 +13,9 @@ class GuardNavBar extends StatefulWidget {
 class _GuardNavBarState extends State<GuardNavBar> {
   int currIndex = 0;
   List pages = [
-    IssueGatePass(),
-    Requests(),
-    History(),
+    // IssueGatePass(),
+    // Requests(),
+    // History(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -97,7 +97,7 @@ class _GuardNavBarState extends State<GuardNavBar> {
 
       return icon;
     } else {
-      return Container();
+      return Text("123");
     }
   }
 }
