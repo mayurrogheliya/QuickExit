@@ -49,7 +49,7 @@ class IssueGatePass extends StatelessWidget {
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(50),
                     topRight: Radius.circular(50))),
-            child: Container(child: TabBarContent()),
+            child: TabBarContent(),
           )
         ],
       ),
