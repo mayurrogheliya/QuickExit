@@ -48,7 +48,7 @@ class _StudentHistoryState extends State<StudentHistory> {
             ),
           ),
           Container(
-            height: height - (height * 0.18) - 100,
+            height: height - (height * 0.18) - 130,
             decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
