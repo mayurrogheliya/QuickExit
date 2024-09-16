@@ -17,7 +17,8 @@ class CustomCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: Color(0xFFF5F8F9),
-      margin: EdgeInsets.all(15.0), // Margin around the card
+      margin: EdgeInsets.only(
+          top: 12, left: 15, right: 15), // Margin around the card
       child: Padding(
         padding: EdgeInsets.all(16.0), // Padding inside the card
         child: Row(
@@ -33,19 +34,19 @@ class CustomCard extends StatelessWidget {
               children: [
                 Text(
                   '$name',
-                  style: TextStyle(fontSize: 16.0),
+                  style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
                 ),
-                SizedBox(height: 8.0), // Space between items
+                SizedBox(height: 3.0), // Space between items
                 Text(
                   'Destination: $destination',
                   style: TextStyle(fontSize: 14.0),
                 ),
-                SizedBox(height: 8.0),
+                SizedBox(height: 3.0),
                 Text(
                   'Exit Date: $exitDate',
                   style: TextStyle(fontSize: 14.0),
                 ),
-                SizedBox(height: 8.0),
+                SizedBox(height: 3.0),
                 Text(
                   'Reason: $reason',
                   style: TextStyle(fontSize: 14.0),
@@ -57,6 +58,8 @@ class CustomCard extends StatelessWidget {
             Row(
               children: [
                 Container(
+                  height: 33,
+                  width: 33,
                   decoration: BoxDecoration(
                     border: Border.all(
                         color: Colors.black,
@@ -67,6 +70,7 @@ class CustomCard extends StatelessWidget {
                   ),
                   child: IconButton(
                     icon: Icon(Icons.check),
+                    padding: EdgeInsets.zero,
                     color: Colors.white,
                     onPressed: () {
                       // Add action for the checkmark button
@@ -78,6 +82,8 @@ class CustomCard extends StatelessWidget {
                   width: 10,
                 ),
                 Container(
+                  height: 33,
+                  width: 33,
                   decoration: BoxDecoration(
                     border: Border.all(
                         color: Colors.black,
@@ -88,6 +94,7 @@ class CustomCard extends StatelessWidget {
                   ),
                   child: IconButton(
                     icon: Icon(Icons.close),
+                    padding: EdgeInsets.zero,
                     color: Colors.black,
                     onPressed: () {
                       // Add action for the X button
