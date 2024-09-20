@@ -39,7 +39,8 @@ class TabBarContent extends StatelessWidget {
               children: [
                 // Students Tab Content
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 24, vertical: 40),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -73,7 +74,8 @@ class TabBarContent extends StatelessWidget {
 
                 // Visitors Tab Content
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 24, vertical: 40),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
