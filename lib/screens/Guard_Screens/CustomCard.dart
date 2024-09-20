@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
 
+enum ButtonType { rightAndCall, rightAndCancel }
+
 class CustomCard extends StatelessWidget {
+  final String? leave;
   final String name;
   final String destination;
   final String exitDate;
-  final String reason;
+  final String? reason;
+  final ButtonType buttonType;
 
   CustomCard({
+    this.leave,
     required this.name,
     required this.destination,
     required this.exitDate,
-    required this.reason,
+    this.reason,
+    required this.buttonType,
   });
 
   @override
@@ -32,6 +38,12 @@ class CustomCard extends StatelessWidget {
               crossAxisAlignment:
                   CrossAxisAlignment.start, // Align text to the left
               children: [
+                if (leave != null && leave!.isNotEmpty)
+                  Text(
+                    '$leave',
+                    style: TextStyle(fontSize: 14.0),
+                  ),
+                // SizedBox(height: 3.0),
                 Text(
                   '$name',
                   style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
@@ -47,16 +59,18 @@ class CustomCard extends StatelessWidget {
                   style: TextStyle(fontSize: 14.0),
                 ),
                 SizedBox(height: 3.0),
-                Text(
-                  'Reason: $reason',
-                  style: TextStyle(fontSize: 14.0),
-                ),
+                if (reason != null && reason!.isNotEmpty)
+                  Text(
+                    'Reason: $reason',
+                    style: TextStyle(fontSize: 14.0),
+                  ),
               ],
             ),
 
             // Right side (Buttons)
             Row(
               children: [
+                // check button
                 Container(
                   height: 33,
                   width: 33,
@@ -78,30 +92,62 @@ class CustomCard extends StatelessWidget {
                     },
                   ),
                 ),
-                SizedBox(
-                  width: 10,
-                ),
-                Container(
-                  height: 33,
-                  width: 33,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                        color: Colors.black,
-                        width: 1,
-                        style: BorderStyle.solid),
-                    borderRadius: BorderRadius.circular(5),
-                    color: Color(0x2B2D4238),
+
+                // Close button
+                if (buttonType == ButtonType.rightAndCancel) ...[
+                  SizedBox(
+                    width: 10,
                   ),
-                  child: IconButton(
-                    icon: Icon(Icons.close),
-                    padding: EdgeInsets.zero,
-                    color: Colors.black,
-                    onPressed: () {
-                      // Add action for the X button
-                      print('Rejected');
-                    },
+                  Container(
+                    height: 33,
+                    width: 33,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                          color: Colors.black,
+                          width: 1,
+                          style: BorderStyle.solid),
+                      borderRadius: BorderRadius.circular(5),
+                      color: Color(0x2B2D4238),
+                    ),
+                    child: IconButton(
+                      icon: Icon(Icons.close),
+                      padding: EdgeInsets.zero,
+                      color: Colors.black,
+                      onPressed: () {
+                        // Add action for the X button
+                        print('Rejected');
+                      },
+                    ),
                   ),
-                ),
+                ],
+
+                // phone button
+                if (buttonType == ButtonType.rightAndCall) ...[
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Container(
+                    height: 33,
+                    width: 33,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                          color: Colors.black,
+                          width: 1,
+                          style: BorderStyle.solid),
+                      borderRadius: BorderRadius.circular(5),
+                      color: Color(0x2B2D4238),
+                    ),
+                    child: IconButton(
+                      icon: Icon(Icons.phone),
+                      padding: EdgeInsets.zero,
+                      color: Colors.black,
+                      onPressed: () {
+                        // Add action for the X button
+                        print('Calling');
+                      },
+                    ),
+                  ),
+                ],
               ],
             ),
           ],
