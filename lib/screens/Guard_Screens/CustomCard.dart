@@ -43,22 +43,22 @@ class CustomCard extends StatelessWidget {
                     '$leave',
                     style: TextStyle(fontSize: 14.0),
                   ),
-                // SizedBox(height: 3.0),
+                SizedBox(height: 2.0),
                 Text(
                   '$name',
                   style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
                 ),
-                SizedBox(height: 3.0), // Space between items
+                SizedBox(height: 2.0), // Space between items
                 Text(
                   'Destination: $destination',
                   style: TextStyle(fontSize: 14.0),
                 ),
-                SizedBox(height: 3.0),
+                SizedBox(height: 2.0),
                 Text(
                   'Exit Date: $exitDate',
                   style: TextStyle(fontSize: 14.0),
                 ),
-                SizedBox(height: 3.0),
+                SizedBox(height: 2.0),
                 if (reason != null && reason!.isNotEmpty)
                   Text(
                     'Reason: $reason',
