@@ -97,7 +97,7 @@ class _GuardNavBarState extends State<GuardNavBar> {
 
       return icon;
     } else {
-      return Text("123");
+      return Text("BuildIcon Error");
     }
   }
 }
