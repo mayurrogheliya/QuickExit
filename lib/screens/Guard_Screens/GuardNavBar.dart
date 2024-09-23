@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quick_exit/screens/Guard_Screens/History.dart';
-import 'package:quick_exit/screens/Guard_Screens/IssueGatepass.dart';
+import 'package:quick_exit/screens/Guard_Screens/IssueGatePass.dart';
 import 'package:quick_exit/screens/Guard_Screens/Requests.dart';
 
 class GuardNavBar extends StatefulWidget {
@@ -13,7 +13,7 @@ class GuardNavBar extends StatefulWidget {
 class _GuardNavBarState extends State<GuardNavBar> {
   int currIndex = 0;
   List pages = [
-    Issuegatepass(),
+    IssueGatePass(),
     Requests(),
     History(),
   ];
@@ -97,7 +97,7 @@ class _GuardNavBarState extends State<GuardNavBar> {
 
       return icon;
     } else {
-      return Container();
+      return Text("BuildIcon Error");
     }
   }
 }
