@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quick_exit/screens/Guard_Screens/IssueGatePass_tabs/TabBarContent.dart';
+import 'package:quick_exit/screens/Guard_Screens/IssueGatePass_Views/GuardTabBar.dart';
 
 class IssueGatePass extends StatelessWidget {
   IssueGatePass({super.key});
@@ -23,7 +23,7 @@ class IssueGatePass extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Gate Pass History',
+                    "Issue Gate Pass",
                     style: TextStyle(
                         fontSize: 26,
                         fontWeight: FontWeight.bold,
@@ -31,7 +31,7 @@ class IssueGatePass extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
                   Text(
-                      "Review your gatepass request\nand see their current status",
+                      "Quickly Authorize Entry or Exit for\n students or visitors",
                       style: TextStyle(
                         color: Colors.white70,
                         fontSize: 15,
@@ -43,13 +43,13 @@ class IssueGatePass extends StatelessWidget {
             ),
           ),
           Container(
-            height: height - (height * 0.18) - 100,
+            height: height - 318,
             decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(50),
                     topRight: Radius.circular(50))),
-            child: TabBarContent(),
+            child: GuardTabBar(),
           )
         ],
       ),
