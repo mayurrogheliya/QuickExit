@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quick_exit/screens/Guard_Screens/GuardNavBar.dart';
-import 'package:quick_exit/screens/Guard_Screens/IssueGatePass.dart';
 import 'package:quick_exit/screens/StudentLogin.dart';
-import 'package:quick_exit/screens/StudentNavBar.dart';
 import 'package:quick_exit/screens/splash_screen.dart';
 // import 'package:quick_exit/screens/StudentLogin.dart';
 
