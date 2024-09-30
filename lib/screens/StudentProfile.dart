@@ -25,7 +25,7 @@ class _StudentProfileState extends State<StudentProfile> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                height: height * 0.22,
+                height: height * 0.19,
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(vertical: 20, horizontal: 24),
@@ -35,7 +35,7 @@ class _StudentProfileState extends State<StudentProfile> {
                     children: [
                       ClipOval(
                         child: Image.asset(
-                          "images/user.png",
+                          "./assets/images/user.png",
                           width: 80,
                           height: 80,
                           fit: BoxFit.cover,
@@ -116,7 +116,7 @@ class _StudentProfileState extends State<StudentProfile> {
                           ),
                           SizedBox(height: 12),
                           ProfileField(
-                            label: "HosterlBuilding Number",
+                            label: "Hostel Building Number",
                             value: "B2",
                           ),
                           SizedBox(height: 12),
