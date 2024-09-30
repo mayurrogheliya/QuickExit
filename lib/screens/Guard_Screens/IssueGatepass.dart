@@ -43,7 +43,7 @@ class IssueGatePass extends StatelessWidget {
             ),
           ),
           Container(
-            height: height - 318,
+            height: height - 285,
             decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(

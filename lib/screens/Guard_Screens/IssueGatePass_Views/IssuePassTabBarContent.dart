@@ -49,13 +49,13 @@ class IssuePassTabBarContent extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _buildTextInputField("Visitor Name", Icons.person),
-                const SizedBox(height: 12),
+                const SizedBox(height: 20),
                 _buildTextInputField("Mobile Number", Icons.phone_iphone),
-                const SizedBox(height: 12),
+                const SizedBox(height: 20),
                 _buildTextInputField("ID Card Number", Icons.payments_sharp),
-                const SizedBox(height: 12),
+                const SizedBox(height: 20),
                 _buildTextInputField("Purpose of Visit", Icons.paste_sharp),
-                const SizedBox(height: 12),
+                const SizedBox(height: 20),
                 Center(
                   child: ElevatedButton(
                     onPressed: () {},
