@@ -49,19 +49,19 @@ class IssuePassTabBarContent extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _buildTextInputField("Visitor Name", Icons.person),
-                const SizedBox(height: 30),
+                const SizedBox(height: 12),
                 _buildTextInputField("Mobile Number", Icons.phone_iphone),
-                const SizedBox(height: 30),
+                const SizedBox(height: 12),
                 _buildTextInputField("ID Card Number", Icons.payments_sharp),
-                const SizedBox(height: 30),
+                const SizedBox(height: 12),
                 _buildTextInputField("Purpose of Visit", Icons.paste_sharp),
-                const SizedBox(height: 40),
+                const SizedBox(height: 12),
                 Center(
                   child: ElevatedButton(
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 40, vertical: 20),
+                          horizontal: 40, vertical: 18),
                       backgroundColor: Colors.red,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
@@ -85,7 +85,7 @@ class IssuePassTabBarContent extends StatelessWidget {
   Widget _buildTextInputField(String labelText, IconData icon) {
     return TextField(
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.symmetric(vertical: 20),
+        // contentPadding: EdgeInsets.symmetric(vertical: 20),
         labelText: labelText,
         prefixIcon: Icon(icon),
         border: OutlineInputBorder(
