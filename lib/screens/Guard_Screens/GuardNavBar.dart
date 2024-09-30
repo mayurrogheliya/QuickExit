@@ -39,7 +39,7 @@ class _GuardNavBarState extends State<GuardNavBar> {
           ),
           _buildBarItem(
             icon: Image.asset(
-              'icons/Requests.png',
+              './assets/icons/Requests.png',
               height: 30,
               width: 30,
             ),
@@ -88,7 +88,7 @@ class _GuardNavBarState extends State<GuardNavBar> {
       {
         if (!isSelected) {
           return Image.asset(
-            "icons/Requests-not-selected.png",
+            "./assets/icons/Requests-not-selected.png",
             height: 30,
             width: 30,
           );
