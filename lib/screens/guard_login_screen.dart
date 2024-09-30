@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quick_exit/screens/Guard_Screens/GuardNavBar.dart';
+import 'package:quick_exit/screens/Rector_Screens/RectorNavBar.dart';
 import 'package:quick_exit/screens/WaveClipper.dart';
 import 'package:quick_exit/screens/StudentLogin.dart';
 
