@@ -10,66 +10,65 @@ class StudentLogin extends StatefulWidget {
 
 class _StudentLoginState extends State<StudentLogin> {
   final TextEditingController _enrollmentController = TextEditingController();
-
   final TextEditingController _passwordController = TextEditingController();
-
   bool isPasswordVisible = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          // Red container with wavy bottom edge and Welcome Text
-          ClipPath(
-            clipper: WaveClipper(),
-            child: Container(
-              width: double
-                  .infinity, // width of red container adjusted with this expanded dint worked
-              height: 400,
-              color: Color(0xFFFF3B30),
-              child: Padding(
-                padding:
-                    const EdgeInsets.only(top: 75, left: 24.0, right: 24.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Welcome to QuickExit',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
+      resizeToAvoidBottomInset:
+          true, // Ensures the screen resizes on keyboard pop-up
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            // Red container with wavy bottom edge and Welcome Text
+            ClipPath(
+              clipper: WaveClipper(),
+              child: Container(
+                width: double.infinity,
+                height: 400,
+                color: Color(0xFFFF3B30),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.only(top: 75, left: 24.0, right: 24.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Welcome to QuickExit',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 21),
-                    Text(
-                      'Seamless and secure gate passes at your fingertips.',
-                      style: TextStyle(
-                        color: Colors.white70,
-                        fontSize: 16,
-                        fontStyle: FontStyle.italic,
+                      SizedBox(height: 21),
+                      Text(
+                        'Seamless and secure gate passes at your fingertips.',
+                        style: TextStyle(
+                          color: Colors.white70,
+                          fontSize: 16,
+                          fontStyle: FontStyle.italic,
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 13),
-                    Text(
-                      'Login to Continue',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.bold,
+                      SizedBox(height: 13),
+                      Text(
+                        'Login to Continue',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
 
-          // Form Field Container with Form Fields
-          Expanded(
-            child: Container(
+            // Form Field Container with Form Fields
+            Padding(
               padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 50),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -91,8 +90,7 @@ class _StudentLoginState extends State<StudentLogin> {
                   //Password input field
                   TextField(
                     obscureText: isPasswordVisible,
-                    controller:
-                        _passwordController, //made password visiblity dynamic
+                    controller: _passwordController,
                     decoration: InputDecoration(
                       labelText: 'Password',
                       labelStyle: TextStyle(color: Colors.grey),
@@ -160,8 +158,8 @@ class _StudentLoginState extends State<StudentLogin> {
                 ],
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

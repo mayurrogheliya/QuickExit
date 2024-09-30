@@ -8,56 +8,56 @@ class RequestGatePassScreen extends StatefulWidget {
 class _RequestGatePassScreenState extends State<RequestGatePassScreen> {
   String? selectedLeaveType;
   DateTime? selectedDate;
+  final TextEditingController _reasonController = TextEditingController();
+  final TextEditingController _destinationController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    TextEditingController _reason_controller = new TextEditingController();
 
     return SafeArea(
       child: Scaffold(
-        body: Container(
-          decoration:
-              BoxDecoration(color: Color(0xFFFF3B30)), // Red background color
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Top Red Container
-              Container(
-                height: height * 0.22,
-                child: Padding(
-                  padding:
-                      const EdgeInsets.only(top: 30, left: 24.0, right: 24.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Request Your Gate Pass',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 26,
-                          fontWeight: FontWeight.bold,
+        body: SingleChildScrollView(
+          child: Container(
+            decoration:
+                BoxDecoration(color: Color(0xFFFF3B30)), // Red background color
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Top Red Container
+                Container(
+                  height: height * 0.22,
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.only(top: 30, left: 24.0, right: 24.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Request Your Gate Pass',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 26,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      SizedBox(height: 8),
-                      Text(
-                        'Choose your leave type and get approval from \nthe right authority',
-                        style: TextStyle(
-                          color: Colors.white70,
-                          fontSize: 15,
-                          fontStyle: FontStyle.italic,
+                        SizedBox(height: 8),
+                        Text(
+                          'Choose your leave type and get approval from \nthe right authority',
+                          style: TextStyle(
+                            color: Colors.white70,
+                            fontSize: 15,
+                            fontStyle: FontStyle.italic,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
 
-              // Bottom White Container Items
-              Expanded(
-                child: Container(
+                // Bottom White Container Items
+                Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
@@ -99,6 +99,7 @@ class _RequestGatePassScreenState extends State<RequestGatePassScreen> {
 
                         // Destination City input field
                         TextField(
+                          controller: _destinationController,
                           decoration: InputDecoration(
                             labelText: 'Destination City',
                             border: OutlineInputBorder(
@@ -143,7 +144,7 @@ class _RequestGatePassScreenState extends State<RequestGatePassScreen> {
 
                         // Reason for Moving Out input field
                         TextField(
-                          controller: _reason_controller,
+                          controller: _reasonController,
                           decoration: InputDecoration(
                             labelText: 'Reason for Moving Out',
                             border: OutlineInputBorder(
@@ -156,7 +157,9 @@ class _RequestGatePassScreenState extends State<RequestGatePassScreen> {
 
                         // Request Leave Button
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            // Handle request leave logic here
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Color(0xFFFF3B30),
                             padding: EdgeInsets.symmetric(
@@ -173,8 +176,8 @@ class _RequestGatePassScreenState extends State<RequestGatePassScreen> {
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
