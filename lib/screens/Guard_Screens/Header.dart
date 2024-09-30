@@ -22,10 +22,11 @@ class Header extends StatelessWidget {
             child: Text(
               title,
               style: TextStyle(
-                color: Colors.white, // Text color
-                fontSize: 24.0, // Text size
-                fontWeight: FontWeight.bold, // Text styling
-              ),
+                  color: Colors.white, // Text color
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.w500 // Text size
+                  // Text styling
+                  ),
             ),
           ),
         ],
