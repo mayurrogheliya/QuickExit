@@ -1,9 +1,15 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:quick_exit/firebase_options.dart';
 import 'package:quick_exit/screens/StudentLogin.dart';
 import 'package:quick_exit/screens/splash_screen.dart';
 // import 'package:quick_exit/screens/StudentLogin.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MyApp());
 }
 

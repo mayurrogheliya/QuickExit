@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:quick_exit/screens/StudentNavBar.dart';
 import 'package:quick_exit/screens/WaveClipper.dart';
 import 'package:quick_exit/screens/guard_login_screen.dart';
+import 'package:quick_exit/firebase/FirebaseOperations.dart';
 
 class StudentLogin extends StatefulWidget {
   @override
@@ -11,7 +13,45 @@ class StudentLogin extends StatefulWidget {
 class _StudentLoginState extends State<StudentLogin> {
   final TextEditingController _enrollmentController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseOperations _firebaseOperations = FirebaseOperations();
+
   bool isPasswordVisible = true;
+
+  Future<void> _login() async {
+    String enNum = _enrollmentController.text.trim();
+    String password = _passwordController.text.trim();
+
+    var studentData = await _firebaseOperations.loginUser(enNum, password);
+
+    if (studentData != null) {
+      // Successful login
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => StudentNavbar()),
+      );
+    } else {
+      // Show error dialog
+      _showErrorDialog('Invalid enrollment number or password.');
+    }
+  }
+
+  // Function to show error dialog
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Login Error'),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -116,13 +156,7 @@ class _StudentLoginState extends State<StudentLogin> {
 
                   //Login Button
                   ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => StudentNavbar()),
-                      );
-                    },
+                    onPressed: () => _login(),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xFFFF3B30),
                       foregroundColor: Colors.white,

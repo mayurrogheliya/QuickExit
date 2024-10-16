@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "109249628543",
+    "project_id": "quickexit-a4191",
+    "storage_bucket": "quickexit-a4191.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:109249628543:android:d234165738bb94ac2d324a",
+        "android_client_info": {
+          "package_name": "com.example.quick_exit"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDY3UyvkD25E_Wq_I9qcFZyMYFNLPo-CiU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:109249628543:android:564e8611146f16132d324a",
+        "android_client_info": {
+          "package_name": "com.quckexit"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDY3UyvkD25E_Wq_I9qcFZyMYFNLPo-CiU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
