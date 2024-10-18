@@ -17,15 +17,33 @@ class FirebaseOperations {
 
         // Check if the password matches
         if (studentData['PASS'] == password) {
-          return studentData; // Successful login, return student data
+          return studentData; 
         } else {
-          return null; // Wrong password
+          return null; 
         }
       } else {
-        return null; // User not found
+        return null; 
       }
     } catch (e) {
       print("Error logging in user: $e");
+      return null;
+    }
+  }
+
+  Future<DocumentSnapshot?> loginEmployee(String empId, String password) async {
+    try {
+      var employee = await _firestore
+          .collection('employee')
+          .where('EMP_ID', isEqualTo: empId)
+          .where('PASS', isEqualTo: password)
+          .limit(1)
+          .get();
+
+      if (employee.docs.isNotEmpty) {
+        return employee.docs.first;
+      }
+    } catch (e) {
+      print("Error logging in: $e");
       return null;
     }
   }

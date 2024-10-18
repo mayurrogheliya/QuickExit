@@ -3,6 +3,7 @@ import 'package:quick_exit/screens/Guard_Screens/GuardNavBar.dart';
 import 'package:quick_exit/screens/Rector_Screens/RectorNavBar.dart';
 import 'package:quick_exit/screens/WaveClipper.dart';
 import 'package:quick_exit/screens/StudentLogin.dart';
+import 'package:quick_exit/firebase/FirebaseOperations.dart'; // Import Firebase operations
 
 class GuardLogin extends StatefulWidget {
   @override
@@ -13,6 +14,45 @@ class _GuardLoginState extends State<GuardLogin> {
   final TextEditingController _employeeController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool isPasswordVisible = true;
+  final FirebaseOperations _firebaseOperations =
+      FirebaseOperations(); // Instantiate FirebaseOperations
+
+  // Method to handle login
+  Future<void> _handleLogin() async {
+    String empId = _employeeController.text.trim();
+    String password = _passwordController.text.trim();
+
+    if (empId.isEmpty || password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please enter Employee ID and Password')),
+      );
+      return;
+    }
+
+    var employee = await _firebaseOperations.loginEmployee(empId, password);
+    if (employee != null) {
+      String role = employee['ROLE'];
+      if (role == 'RECTOR') {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => RectorNavBar()),
+        );
+      } else if (role == 'GUARD') {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => GuardNavBar()),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Unauthorized role')),
+        );
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Invalid Employee ID or Password')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -115,12 +155,7 @@ class _GuardLoginState extends State<GuardLogin> {
 
                   // Login Button
                   ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => GuardNavBar()),
-                      );
-                    },
+                    onPressed: _handleLogin, // Call login function
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xFFFF3B30),
                       foregroundColor: Colors.white,
