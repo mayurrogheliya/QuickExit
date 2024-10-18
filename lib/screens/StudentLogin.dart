@@ -31,24 +31,19 @@ class _StudentLoginState extends State<StudentLogin> {
         MaterialPageRoute(builder: (context) => StudentNavbar()),
       );
     } else {
-      // Show error dialog
-      _showErrorDialog('Invalid enrollment number or password.');
+      // Show error Snackbar
+      _showErrorSnackbar('Invalid enrollment number or password.');
     }
   }
 
-  // Function to show error dialog
-  void _showErrorDialog(String message) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Login Error'),
+  // Function to show error Snackbar
+  void _showErrorSnackbar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
         content: Text(message),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text('OK'),
-          ),
-        ],
+        backgroundColor: Colors.red,
+        behavior: SnackBarBehavior.floating,
+        duration: Duration(seconds: 3),
       ),
     );
   }
