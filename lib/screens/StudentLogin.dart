@@ -4,6 +4,7 @@ import 'package:quick_exit/screens/StudentNavBar.dart';
 import 'package:quick_exit/screens/WaveClipper.dart';
 import 'package:quick_exit/screens/guard_login_screen.dart';
 import 'package:quick_exit/firebase/FirebaseOperations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class StudentLogin extends StatefulWidget {
   @override
@@ -18,6 +19,26 @@ class _StudentLoginState extends State<StudentLogin> {
 
   bool isPasswordVisible = true;
 
+  @override
+  void initState() {
+    super.initState();
+    _checkIfLoggedIn(); // Check if user is already logged in
+  }
+
+  // Check if the user is already logged in
+  Future<void> _checkIfLoggedIn() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? enNum = prefs.getString('enNum');
+
+    if (enNum != null) {
+      // Redirect to StudentNavbar if already logged in
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => StudentNavbar()),
+      );
+    }
+  }
+
   Future<void> _login() async {
     String enNum = _enrollmentController.text.trim();
     String password = _passwordController.text.trim();
@@ -25,6 +46,9 @@ class _StudentLoginState extends State<StudentLogin> {
     var studentData = await _firebaseOperations.loginUser(enNum, password);
 
     if (studentData != null) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('enNum', enNum); // Store only enrollment number
+
       // Successful login
       Navigator.push(
         context,

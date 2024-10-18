@@ -3,7 +3,8 @@ import 'package:quick_exit/screens/Guard_Screens/GuardNavBar.dart';
 import 'package:quick_exit/screens/Rector_Screens/RectorNavBar.dart';
 import 'package:quick_exit/screens/WaveClipper.dart';
 import 'package:quick_exit/screens/StudentLogin.dart';
-import 'package:quick_exit/firebase/FirebaseOperations.dart'; // Import Firebase operations
+import 'package:quick_exit/firebase/FirebaseOperations.dart';
+import 'package:shared_preferences/shared_preferences.dart'; // Import Firebase operations
 
 class GuardLogin extends StatefulWidget {
   @override
@@ -14,8 +15,27 @@ class _GuardLoginState extends State<GuardLogin> {
   final TextEditingController _employeeController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool isPasswordVisible = true;
-  final FirebaseOperations _firebaseOperations =
-      FirebaseOperations(); // Instantiate FirebaseOperations
+  final FirebaseOperations _firebaseOperations = FirebaseOperations();
+
+  @override
+  void initState() {
+    super.initState();
+    _checkIfLoggedIn(); // Check if user is already logged in
+  }
+
+  // Check if the user is already logged in
+  Future<void> _checkIfLoggedIn() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? enNum = prefs.getString('empId');
+
+    if (enNum != null) {
+      // Redirect to StudentNavbar if already logged in
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => GuardNavBar()),
+      );
+    }
+  }
 
   // Method to handle login
   Future<void> _handleLogin() async {
@@ -31,6 +51,8 @@ class _GuardLoginState extends State<GuardLogin> {
 
     var employee = await _firebaseOperations.loginEmployee(empId, password);
     if (employee != null) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('empId', empId);
       String role = employee['ROLE'];
       if (role == 'RECTOR') {
         Navigator.push(
