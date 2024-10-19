@@ -72,4 +72,29 @@ class FirebaseOperations {
       return null;
     }
   }
+
+  Future<void> addRequest({
+    required String enNum,
+    required String leaveType,
+    required String destinationCity,
+    required String exitDate,
+    required String reason,
+    required String status,
+  }) async {
+    try {
+      await _firestore.collection('requests').add({
+        'EN_NUM': enNum,
+        'LEAVE_TYPE': leaveType,
+        'DESTI_CITY': destinationCity,
+        'EXIT_DATE': exitDate,
+        'REASON': reason,
+        'STATUS': status,
+        'APPROVED_BY': '',
+        'timestamp': FieldValue.serverTimestamp(),
+      });
+    } catch (e) {
+      print('Error issuing gate pass: $e');
+      throw e; // Rethrow error for potential handling
+    }
+  }
 }

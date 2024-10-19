@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:quick_exit/screens/StudentNavBar.dart';
 import 'package:quick_exit/screens/WaveClipper.dart';
@@ -14,7 +13,6 @@ class StudentLogin extends StatefulWidget {
 class _StudentLoginState extends State<StudentLogin> {
   final TextEditingController _enrollmentController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseOperations _firebaseOperations = FirebaseOperations();
 
   bool isPasswordVisible = true;

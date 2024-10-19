@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:quick_exit/firebase/FirebaseOperations.dart'; // Import your Firebase operations file
+import 'package:shared_preferences/shared_preferences.dart'; // Firebase Firestore package
 
 class RequestGatePassScreen extends StatefulWidget {
   @override
@@ -10,6 +13,66 @@ class _RequestGatePassScreenState extends State<RequestGatePassScreen> {
   DateTime? selectedDate;
   final TextEditingController _reasonController = TextEditingController();
   final TextEditingController _destinationController = TextEditingController();
+
+  // Method to handle requesting the leave
+  void _requestLeave() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? enNum = prefs.getString('enNum');
+
+    if (enNum == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Enrollment number not found")),
+      );
+      return;
+    }
+
+    String leaveType = selectedLeaveType ?? "";
+    String destinationCity = _destinationController.text.trim();
+    String reason = _reasonController.text.trim();
+    String exitDate = selectedDate != null
+        ? DateFormat('dd/MM/yyyy').format(selectedDate!)
+        : "";
+    String status = "Pending"; // Default status when requesting leave
+
+    if (leaveType.isEmpty ||
+        destinationCity.isEmpty ||
+        reason.isEmpty ||
+        exitDate.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Please fill in all the fields")),
+      );
+      return;
+    }
+
+    // Call the addRequest function from FirebaseOperations
+    try {
+      await FirebaseOperations().addRequest(
+        enNum: enNum,
+        leaveType: leaveType,
+        destinationCity: destinationCity,
+        exitDate: exitDate,
+        reason: reason,
+        status: status,
+      );
+
+      // Show success message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Gate pass request submitted successfully")),
+      );
+
+      // Clear the fields
+      _destinationController.clear();
+      _reasonController.clear();
+      setState(() {
+        selectedLeaveType = null;
+        selectedDate = null;
+      });
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Failed to request gate pass: $error")),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -157,9 +220,8 @@ class _RequestGatePassScreenState extends State<RequestGatePassScreen> {
 
                         // Request Leave Button
                         ElevatedButton(
-                          onPressed: () {
-                            // Handle request leave logic here
-                          },
+                          onPressed:
+                              _requestLeave, // Call the request leave method
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Color(0xFFFF3B30),
                             padding: EdgeInsets.symmetric(
