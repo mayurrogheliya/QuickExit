@@ -259,17 +259,13 @@ class FirebaseOperations {
     }
   }
 
-
 //Rector Methods
-
-
-
 
   Stream<List<Map<String, dynamic>>> fetchApprovedRequestsRector() {
     return FirebaseFirestore.instance
         .collection('requests')
+        .where('LEAVE_TYPE', isEqualTo: 'Extended Leave')
         .where('STATUS', isEqualTo: 'Approved')
-        .where('LEAVE_TYPE',isEqualTo: 'Extended Leave')
         .snapshots()
         .asyncMap((snapshot) async {
       List<Map<String, dynamic>> requestsList = [];
