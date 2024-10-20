@@ -181,14 +181,17 @@ class FirebaseOperations {
         if (studentData != null) {
           String fname = studentData['FNAME'];
           String lname = studentData['LNAME'];
+          String phone = studentData['PHONE'];
           String fullName = '$fname $lname';
 
           requestsList.add({
+            'id': requestDoc.id, // Include document ID
             'name': fullName,
             'leave': requestDoc['LEAVE_TYPE'],
             'destination': requestDoc['DESTI_CITY'],
             'exitDate': requestDoc['EXIT_DATE'],
             'reason': reason,
+            'phone': phone
           });
         }
       }
@@ -197,8 +200,25 @@ class FirebaseOperations {
   }
 
   // Fetch all visitor requests
-  Stream<QuerySnapshot> fetchVisitorRequests() {
-    return _firestore.collection('visitor_requests').snapshots();
+  Stream<List<Map<String, dynamic>>> fetchVisitorRequests() {
+    return FirebaseFirestore.instance
+        .collection(
+            'visitor_requests') // Ensure this is the correct collection name
+        .where('STATUS', isEqualTo: 'Approved') // Filter for approved visitors
+        .snapshots()
+        .map((snapshot) {
+      // Map the documents to a list of maps
+      return snapshot.docs.map((doc) {
+        final data = doc.data() as Map<String, dynamic>;
+        return {
+          'id': doc.id, // Include document ID
+          'name': data['VISITOR_NAME'],
+          'reason': data['PURPOSE_OF_VISIT'] ?? 'N/A',
+          'ENTRY_TIME': data['ENTRY_TIME'] ?? 'Unknown',
+          'mobileNumber': data['MOBILE_NUMBER'] ?? 'Unknown',
+        };
+      }).toList();
+    });
   }
 
   // Update request status to "Completed"

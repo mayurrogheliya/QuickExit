@@ -1,11 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:quick_exit/screens/Guard_Screens/Header.dart';
 import 'package:quick_exit/screens/Guard_Screens/CustomCard.dart';
 import 'package:quick_exit/screens/Guard_Screens/NavBox.dart';
 import 'package:quick_exit/screens/Guard_Screens/VisitorCard.dart';
-import 'package:quick_exit/firebase/FirebaseOperations.dart'; // Import FirebaseOperations
-import 'package:url_launcher/url_launcher.dart'; // For phone dialer
+import 'package:quick_exit/firebase/FirebaseOperations.dart'; 
+import 'package:url_launcher/url_launcher.dart'; 
 
 class History extends StatefulWidget {
   const History({super.key});
@@ -26,66 +25,72 @@ class _HistoryState extends State<History> {
           NavBox(
             title1: "Students",
             title2: "Visitors",
-            screen1: StreamBuilder<QuerySnapshot>(
+            screen1: StreamBuilder<List<Map<String, dynamic>>>(
               stream: _firebaseOps.fetchApprovedRequests(),
               builder: (context, snapshot) {
-                if (!snapshot.hasData) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return Center(child: Text('No approved requests found.'));
+                } else {
+                  return Column(
+                    children: snapshot.data!.map((request) {
+                      return CustomCard(
+                        leave: request['leave'],
+                        name: request['name'],
+                        destination: request['destination'],
+                        exitDate: request['exitDate'],
+                        reason: request['reason'],
+                        buttonType: ButtonType.rightAndCall,
+                        onApprove: () async {
+                          //On Approve change the status to "Completed"
+                          await _firebaseOps.updateRequestStatus(
+                              request['id'], 'requests');
+                          print('Approved: ${request['name']}');
+                        },
+                        onCall: () {
+                          // Call functionality using phone number if available
+                          _callPhoneNumber(request['phone']);
+                        },
+                      );
+                    }).toList(),
+                  );
                 }
-                var requests = snapshot.data!.docs;
-                return Column(
-                  children: requests.map((doc) {
-                    var data = doc.data() as Map<String, dynamic>;
-                    return CustomCard(
-                      reason: data["REASON"],
-                      leave: data['LEAVE_TYPE'] ??
-                          'Unknown Leave', // Provide a default value if LEAVE_TYPE is null
-                      name: (data['FNAME'] ?? 'Unknown') +
-                          " " +
-                          (data['LNAME'] ??
-                              'Name'), // Handle null values for FNAME and LNAME
-                      destination: data['DESTI_CITY'] ??
-                          'Unknown Destination', // Provide a default for DESTI_CITY
-                      exitDate: data['EXIT_DATE'] ??
-                          'Unknown Date', // Provide a default for EXIT_DATE
-                      buttonType: ButtonType.rightAndCall,
-                      onApprove: () => _firebaseOps.updateRequestStatus(
-                        doc.id,
-                        'requests',
-                      ),
-                      onCall: () => _callPhoneNumber(
-                          data['PHONE'] ?? ''), // Handle null PHONE field
-                    );
-                  }).toList(),
-                );
               },
             ),
-            screen2: StreamBuilder<QuerySnapshot>(
-              stream: _firebaseOps.fetchVisitorRequests(),
+            screen2: StreamBuilder<List<Map<String, dynamic>>>(
+              stream: _firebaseOps
+                  .fetchVisitorRequests(), 
               builder: (context, snapshot) {
-                if (!snapshot.hasData) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return Center(child: Text('No visitors found.'));
+                } else {
+                  // Display the fetched visitor data
+                  return Column(
+                    children: snapshot.data!.map((visitor) {
+                      return VisitorCard(
+                        reason: visitor['reason'],
+                        name: visitor['name'],
+                        timestamp: visitor['ENTRY_TIME'],
+                        onApprove: () async {
+                          await _firebaseOps.updateRequestStatus(
+                              visitor['id'], 'visitor_requests');
+                          print('Visitor approved: ${visitor['name']}');
+                        },
+                        onCall: () {
+                          // Call functionality using visitor's mobile number
+                          _callPhoneNumber(visitor['mobileNumber']);
+                        },
+                      );
+                    }).toList(),
+                  );
                 }
-                var requests = snapshot.data!.docs;
-                return Column(
-                  children: requests.map((doc) {
-                    var data = doc.data() as Map<String, dynamic>;
-                    return VisitorCard(
-                      reason: data['PURPOSE_OF_VISIT'] ??
-                          'Unknown Reason', // Provide a default for REASON
-                      name: data['VISITOR_NAME'] ??
-                          'Unknown Name', // Provide a default for NAME
-                      timestamp: data['ENTRY_TIME'] ??
-                          'Unknown Time', // Provide a default for ENTRY_TIME
-                      onApprove: () => _firebaseOps.updateRequestStatus(
-                        doc.id,
-                        'visitor_requests',
-                      ),
-                      onCall: () => _callPhoneNumber(data['MOBILE_NUMBER'] ??
-                          ''), // Handle null PHONE field
-                    );
-                  }).toList(),
-                );
               },
             ),
           ),

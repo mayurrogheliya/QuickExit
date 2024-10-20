@@ -64,7 +64,7 @@ class CustomCard extends StatelessWidget {
                   ),
                   child: IconButton(
                     padding: EdgeInsets.zero,
-                    icon: Icon(Icons.check),
+                    icon: Icon(Icons.done_all),
                     color: Colors.white,
                     onPressed: onApprove, // Call onApprove
                   ),
