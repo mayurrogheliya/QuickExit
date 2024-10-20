@@ -258,4 +258,47 @@ class FirebaseOperations {
       print('Error updating status: $e');
     }
   }
+
+
+//Rector Methods
+
+
+
+
+  Stream<List<Map<String, dynamic>>> fetchApprovedRequestsRector() {
+    return FirebaseFirestore.instance
+        .collection('requests')
+        .where('STATUS', isEqualTo: 'Approved')
+        .where('LEAVE_TYPE',isEqualTo: 'Extended Leave')
+        .snapshots()
+        .asyncMap((snapshot) async {
+      List<Map<String, dynamic>> requestsList = [];
+
+      for (var requestDoc in snapshot.docs) {
+        String enNum = requestDoc['EN_NUM'];
+        String reason = requestDoc['REASON'] ?? 'N/A';
+
+        // Fetch student details using EN_NUM
+        Map<String, dynamic>? studentData = await getStudentData(enNum);
+
+        if (studentData != null) {
+          String fname = studentData['FNAME'];
+          String lname = studentData['LNAME'];
+          String phone = studentData['PHONE'];
+          String fullName = '$fname $lname';
+
+          requestsList.add({
+            'id': requestDoc.id, // Include document ID
+            'name': fullName,
+            'leave': requestDoc['LEAVE_TYPE'],
+            'destination': requestDoc['DESTI_CITY'],
+            'exitDate': requestDoc['EXIT_DATE'],
+            'reason': reason,
+            'phone': phone
+          });
+        }
+      }
+      return requestsList;
+    });
+  }
 }
