@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:quick_exit/firebase/FirebaseOperations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:intl/intl.dart'; // For date formatting
 
 class RectorIssueGatePass extends StatefulWidget {
   @override
@@ -6,10 +9,52 @@ class RectorIssueGatePass extends StatefulWidget {
 }
 
 class _RectorIssueGatePassState extends State<RectorIssueGatePass> {
-  String? enrollment;
+  final FirebaseOperations _firebaseOperations = FirebaseOperations();
   DateTime? selectedDate;
   final TextEditingController _reasonController = TextEditingController();
   final TextEditingController _destinationController = TextEditingController();
+  final TextEditingController _enNumController = TextEditingController();
+
+  // Method to handle the leave request submission
+  void _handleLeaveRequest() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? empId = prefs.getString('empId');
+
+    if (empId == null ||
+        _enNumController.text.isEmpty ||
+        _destinationController.text.isEmpty ||
+        _reasonController.text.isEmpty ||
+        selectedDate == null) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Please fill all fields and ensure empId is set.')));
+      return;
+    }
+
+    try {
+      // Formatting selectedDate for storage
+      String formattedDate = DateFormat('dd/MM/yyyy').format(selectedDate!);
+
+      await _firebaseOperations.issueLeave(
+        empId: empId,
+        destiCity: _destinationController.text,
+        enNum: _enNumController.text,
+        reason: _reasonController.text,
+        exitDate: formattedDate, 
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Gate Pass successfully issued!')),
+      );
+      _enNumController.clear();
+      _destinationController.clear();
+      _reasonController.clear();
+      selectedDate = null;
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error issuing Gate Pass: $e')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +115,7 @@ class _RectorIssueGatePassState extends State<RectorIssueGatePass> {
                     padding: const EdgeInsets.only(top: 55),
                     child: Column(
                       children: [
-                        // Type of Leave Dropdown
+                        // Enrollment Number input field
                         TextField(
                           decoration: InputDecoration(
                             labelText: 'Enrollment Number',
@@ -79,6 +124,11 @@ class _RectorIssueGatePassState extends State<RectorIssueGatePass> {
                             ),
                             suffixIcon: Icon(Icons.clear),
                           ),
+                          onChanged: (value) {
+                            setState(() {
+                              _enNumController.text = value;
+                            });
+                          },
                         ),
                         SizedBox(height: 35),
 
@@ -140,16 +190,13 @@ class _RectorIssueGatePassState extends State<RectorIssueGatePass> {
                         ),
                         SizedBox(height: 45),
 
-                        // Request Leave Button
+                        // Issue Leave Button
                         ElevatedButton(
-                          onPressed: () {
-                            // Handle request leave logic here
-                          },
+                          onPressed: _handleLeaveRequest,
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Color(0xFFFF3B30),
                             padding: EdgeInsets.symmetric(
-                                horizontal: 50,
-                                vertical: 18), // Adjusted padding
+                                horizontal: 50, vertical: 18),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(50),
                             ),

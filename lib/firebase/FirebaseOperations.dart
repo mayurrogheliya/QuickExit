@@ -95,7 +95,7 @@ class FirebaseOperations {
       });
     } catch (e) {
       print('Error issuing gate pass: $e');
-      throw e; 
+      throw e;
     }
   }
 
@@ -135,11 +135,8 @@ class FirebaseOperations {
     required String destiCity,
     required String enNum,
     required String reason,
+    required String exitDate,
   }) async {
-    // Get today's date
-    String exitDate =
-        DateTime.now().toString().substring(0, 10); // 'YYYY-MM-DD'
-
     // Prepare the request data
     Map<String, dynamic> requestData = {
       'APPROVED_BY': empId,
@@ -233,8 +230,7 @@ class FirebaseOperations {
   // Fetch all visitor requests
   Stream<List<Map<String, dynamic>>> fetchVisitorRequests() {
     return FirebaseFirestore.instance
-        .collection(
-            'visitor_requests') 
+        .collection('visitor_requests')
         .where('STATUS', isEqualTo: 'Approved') // Filter for approved visitors
         .snapshots()
         .map((snapshot) {
