@@ -14,7 +14,7 @@ class _RectorNavBarState extends State<RectorNavBar> {
   int currIndex = 0;
   List pages = [
     RectorIssueGatePass(),
-    RectorRequests(),
+    //RectorRequests(),
     RectorHistory(),
   ];
   @override

@@ -9,6 +9,8 @@ class CustomCard extends StatelessWidget {
   final String exitDate;
   final String? reason;
   final ButtonType buttonType;
+  final VoidCallback onApprove; // Add onApprove callback
+  final VoidCallback onCall; // Add onCall callback
 
   CustomCard({
     this.leave,
@@ -17,137 +19,72 @@ class CustomCard extends StatelessWidget {
     required this.exitDate,
     this.reason,
     required this.buttonType,
+    required this.onApprove, // Pass callback
+    required this.onCall, // Pass callback
   });
 
   @override
   Widget build(BuildContext context) {
     return Card(
       color: Color(0xFFF5F8F9),
-      margin: EdgeInsets.only(
-          top: 12, left: 15, right: 15), // Margin around the card
+      margin: EdgeInsets.only(top: 12, left: 15, right: 15),
       child: Padding(
-        padding: EdgeInsets.all(16.0), // Padding inside the card
+        padding: EdgeInsets.all(16.0),
         child: Row(
-          crossAxisAlignment:
-              CrossAxisAlignment.start, // Align items to the start vertically
-          mainAxisAlignment: MainAxisAlignment
-              .spaceBetween, // Space between left and right parts
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            // Left side (Details)
             Column(
-              crossAxisAlignment:
-                  CrossAxisAlignment.start, // Align text to the left
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 if (leave != null && leave!.isNotEmpty)
-                  Text(
-                    '$leave',
-                    style: TextStyle(fontSize: 14.0),
-                  ),
+                  Text('$leave', style: TextStyle(fontSize: 14.0)),
                 SizedBox(height: 2.0),
-                Text(
-                  '$name',
-                  style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
-                ),
-                SizedBox(height: 2.0), // Space between items
-                Text(
-                  'Destination: $destination',
-                  style: TextStyle(fontSize: 14.0),
-                ),
+                Text(name,
+                    style:
+                        TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500)),
                 SizedBox(height: 2.0),
-                Text(
-                  'Exit Date: $exitDate',
-                  style: TextStyle(fontSize: 14.0),
-                ),
+                Text('Destination: $destination',
+                    style: TextStyle(fontSize: 14.0)),
                 SizedBox(height: 2.0),
-                if (reason != null && reason!.isNotEmpty)
-                  Text(
-                    'Reason: $reason',
-                    style: TextStyle(fontSize: 14.0),
-                  ),
+                Text('Exit Date: $exitDate', style: TextStyle(fontSize: 14.0)),
+                if (reason != null && reason!.isNotEmpty) SizedBox(height: 2.0),
+                Text('Reason: $reason', style: TextStyle(fontSize: 14.0)),
               ],
             ),
-
-            // Right side (Buttons)
             Row(
               children: [
-                // check button
                 Container(
                   height: 33,
                   width: 33,
                   decoration: BoxDecoration(
-                    border: Border.all(
-                        color: Colors.black,
-                        width: 1,
-                        style: BorderStyle.solid),
+                    border: Border.all(color: Colors.black, width: 1),
                     borderRadius: BorderRadius.circular(5),
                     color: Color(0xFFFF3B30),
                   ),
                   child: IconButton(
-                    icon: Icon(Icons.check),
                     padding: EdgeInsets.zero,
+                    icon: Icon(Icons.check),
                     color: Colors.white,
-                    onPressed: () {
-                      // Add action for the checkmark button
-                      print('Approved');
-                    },
+                    onPressed: onApprove, // Call onApprove
                   ),
                 ),
-
-                // Close button
-                if (buttonType == ButtonType.rightAndCancel) ...[
-                  SizedBox(
-                    width: 10,
+                if (buttonType == ButtonType.rightAndCall) SizedBox(width: 10),
+                Container(
+                  height: 33,
+                  width: 33,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black, width: 1),
+                    borderRadius: BorderRadius.circular(5),
+                    color: Color(0x2B2D4238),
                   ),
-                  Container(
-                    height: 33,
-                    width: 33,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                          color: Colors.black,
-                          width: 1,
-                          style: BorderStyle.solid),
-                      borderRadius: BorderRadius.circular(5),
-                      color: Color(0x2B2D4238),
-                    ),
-                    child: IconButton(
-                      icon: Icon(Icons.close),
-                      padding: EdgeInsets.zero,
-                      color: Colors.black,
-                      onPressed: () {
-                        // Add action for the X button
-                        print('Rejected');
-                      },
-                    ),
+                  child: IconButton(
+                    padding: EdgeInsets.zero,
+                    icon: Icon(Icons.phone),
+                    color: Colors.black,
+                    onPressed: onCall, // Call onCall
                   ),
-                ],
-
-                // phone button
-                if (buttonType == ButtonType.rightAndCall) ...[
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Container(
-                    height: 33,
-                    width: 33,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                          color: Colors.black,
-                          width: 1,
-                          style: BorderStyle.solid),
-                      borderRadius: BorderRadius.circular(5),
-                      color: Color(0x2B2D4238),
-                    ),
-                    child: IconButton(
-                      icon: Icon(Icons.phone),
-                      padding: EdgeInsets.zero,
-                      color: Colors.black,
-                      onPressed: () {
-                        // Add action for the X button
-                        print('Calling');
-                      },
-                    ),
-                  ),
-                ],
+                ),
               ],
             ),
           ],

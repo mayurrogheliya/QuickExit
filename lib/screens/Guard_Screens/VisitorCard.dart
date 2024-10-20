@@ -4,98 +4,73 @@ class VisitorCard extends StatelessWidget {
   final String reason;
   final String name;
   final String timestamp;
+  final VoidCallback onApprove; // Add onApprove callback
+  final VoidCallback onCall; // Add onCall callback
 
   VisitorCard({
     required this.reason,
     required this.name,
     required this.timestamp,
+    required this.onApprove, // Pass callback
+    required this.onCall, // Pass callback
   });
 
   @override
   Widget build(BuildContext context) {
     return Card(
       color: Color(0xFFF5F8F9),
-      margin: EdgeInsets.only(
-          top: 12, left: 15, right: 15), // Margin around the card
+      margin: EdgeInsets.only(top: 12, left: 15, right: 15),
       child: Padding(
-        padding: EdgeInsets.all(16.0), // Padding inside the card
+        padding: EdgeInsets.all(16.0),
         child: Row(
-          crossAxisAlignment:
-              CrossAxisAlignment.start, // Align items to the start vertically
-          mainAxisAlignment: MainAxisAlignment
-              .spaceBetween, // Space between left and right parts
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            // Left side (Details)
             Column(
-              crossAxisAlignment:
-                  CrossAxisAlignment.start, // Align text to the left
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  '$reason',
-                  style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w400),
-                ),
+                Text(reason,
+                    style:
+                        TextStyle(fontSize: 14.0, fontWeight: FontWeight.w400)),
                 SizedBox(height: 2.0),
-                Text(
-                  '$name',
-                  style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
-                ),
+                Text(name,
+                    style:
+                        TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500)),
                 SizedBox(height: 2.0),
-                Text(
-                  'Entrance: $timestamp',
-                  style: TextStyle(fontSize: 14.0),
-                ),
+                Text('Entrance: $timestamp', style: TextStyle(fontSize: 14.0)),
               ],
             ),
-
-            // Right side (Buttons)
             Row(
               children: [
-                // check button
                 Container(
                   height: 33,
                   width: 33,
                   decoration: BoxDecoration(
-                    border: Border.all(
-                        color: Colors.black,
-                        width: 1,
-                        style: BorderStyle.solid),
+                    border: Border.all(color: Colors.black, width: 1),
                     borderRadius: BorderRadius.circular(5),
                     color: Color(0xFFFF3B30),
                   ),
                   child: IconButton(
-                    icon: Icon(Icons.done_all),
                     padding: EdgeInsets.zero,
+                    icon: Icon(Icons.check),
                     color: Colors.white,
-                    onPressed: () {
-                      // Add action for the checkmark button
-                      print('Approved');
-                    },
+                    onPressed: onApprove, // Call onApprove
                   ),
                 ),
-
-                // phone button
-                SizedBox(
-                  width: 10,
-                ),
+                SizedBox(width: 10),
                 Container(
                   height: 33,
                   width: 33,
                   decoration: BoxDecoration(
-                    border: Border.all(
-                        color: Colors.black,
-                        width: 1,
-                        style: BorderStyle.solid),
+                    border: Border.all(color: Colors.black, width: 1),
                     borderRadius: BorderRadius.circular(5),
                     color: Color(0x2B2D4238),
                   ),
                   child: IconButton(
-                    icon: Icon(Icons.phone),
                     padding: EdgeInsets.zero,
+                    icon: Icon(Icons.phone),
                     color: Colors.black,
-                    onPressed: () {
-                      // Add action for the X button
-                      print('Calling');
-                    },
+                    onPressed: onCall, // Call onCall
                   ),
                 ),
               ],

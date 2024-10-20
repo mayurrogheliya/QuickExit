@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 class FirebaseOperations {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -95,6 +96,119 @@ class FirebaseOperations {
     } catch (e) {
       print('Error issuing gate pass: $e');
       throw e; // Rethrow error for potential handling
+    }
+  }
+
+  Future<void> issueGatePass({
+    required String empId,
+    required String destiCity,
+    required String enNum,
+    required String reason,
+  }) async {
+    // Get today's date
+    String exitDate =
+        DateTime.now().toString().substring(0, 10); // 'YYYY-MM-DD'
+
+    // Prepare the request data
+    Map<String, dynamic> requestData = {
+      'APPROVED_BY': empId,
+      'DESTI_CITY': destiCity,
+      'EN_NUM': enNum,
+      'EXIT_DATE': exitDate,
+      'LEAVE_TYPE': 'Intra-day Leave',
+      'REASON': reason,
+      'STATUS': 'Approved',
+      'timestamp':
+          FieldValue.serverTimestamp(), // Use Firebase's server timestamp
+    };
+
+    try {
+      // Add the request to Firebase Firestore
+      await FirebaseFirestore.instance.collection('requests').add(requestData);
+    } catch (e) {
+      throw Exception('Error issuing Gate Pass: $e');
+    }
+  }
+
+  // Function to add gate pass request for Visitors to Firebase
+  Future<void> issueVisitorGatePass({
+    required String empId,
+    required String visitorName,
+    required String mobileNumber,
+    required String idCardNumber,
+    required String purposeOfVisit,
+  }) async {
+    // Get current time in HH:MM format
+    String entryTime = DateFormat('HH:mm').format(DateTime.now());
+
+    // Prepare the request data for visitors
+    Map<String, dynamic> visitorData = {
+      'APPROVED_BY': empId,
+      'VISITOR_NAME': visitorName,
+      'MOBILE_NUMBER': mobileNumber,
+      'ID_CARD_NUMBER': idCardNumber,
+      'PURPOSE_OF_VISIT': purposeOfVisit,
+      'ENTRY_TIME': entryTime,
+      'STATUS': 'Approved',
+      'timestamp': FieldValue.serverTimestamp(),
+    };
+
+    try {
+      // Add the visitor request to Firebase Firestore
+      await FirebaseFirestore.instance
+          .collection('visitor_requests')
+          .add(visitorData);
+    } catch (e) {
+      throw Exception('Error issuing Visitor Gate Pass: $e');
+    }
+  }
+
+  Stream<List<Map<String, dynamic>>> fetchApprovedRequests() {
+    return FirebaseFirestore.instance
+        .collection('requests')
+        .where('STATUS', isEqualTo: 'Approved')
+        .snapshots()
+        .asyncMap((snapshot) async {
+      List<Map<String, dynamic>> requestsList = [];
+
+      for (var requestDoc in snapshot.docs) {
+        String enNum = requestDoc['EN_NUM'];
+        String reason = requestDoc['REASON'] ?? 'N/A';
+
+        // Fetch student details using EN_NUM
+        Map<String, dynamic>? studentData = await getStudentData(enNum);
+
+        if (studentData != null) {
+          String fname = studentData['FNAME'];
+          String lname = studentData['LNAME'];
+          String fullName = '$fname $lname';
+
+          requestsList.add({
+            'name': fullName,
+            'leave': requestDoc['LEAVE_TYPE'],
+            'destination': requestDoc['DESTI_CITY'],
+            'exitDate': requestDoc['EXIT_DATE'],
+            'reason': reason,
+          });
+        }
+      }
+      return requestsList;
+    });
+  }
+
+  // Fetch all visitor requests
+  Stream<QuerySnapshot> fetchVisitorRequests() {
+    return _firestore.collection('visitor_requests').snapshots();
+  }
+
+  // Update request status to "Completed"
+  Future<void> updateRequestStatus(String docId, String collection) async {
+    try {
+      await _firestore.collection(collection).doc(docId).update({
+        'STATUS': 'Completed',
+      });
+    } catch (e) {
+      print('Error updating status: $e');
     }
   }
 }
