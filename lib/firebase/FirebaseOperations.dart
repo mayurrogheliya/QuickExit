@@ -95,7 +95,7 @@ class FirebaseOperations {
       });
     } catch (e) {
       print('Error issuing gate pass: $e');
-      throw e; // Rethrow error for potential handling
+      throw e; 
     }
   }
 
@@ -116,6 +116,37 @@ class FirebaseOperations {
       'EN_NUM': enNum,
       'EXIT_DATE': exitDate,
       'LEAVE_TYPE': 'Intra-day Leave',
+      'REASON': reason,
+      'STATUS': 'Approved',
+      'timestamp':
+          FieldValue.serverTimestamp(), // Use Firebase's server timestamp
+    };
+
+    try {
+      // Add the request to Firebase Firestore
+      await FirebaseFirestore.instance.collection('requests').add(requestData);
+    } catch (e) {
+      throw Exception('Error issuing Gate Pass: $e');
+    }
+  }
+
+  Future<void> issueLeave({
+    required String empId,
+    required String destiCity,
+    required String enNum,
+    required String reason,
+  }) async {
+    // Get today's date
+    String exitDate =
+        DateTime.now().toString().substring(0, 10); // 'YYYY-MM-DD'
+
+    // Prepare the request data
+    Map<String, dynamic> requestData = {
+      'APPROVED_BY': empId,
+      'DESTI_CITY': destiCity,
+      'EN_NUM': enNum,
+      'EXIT_DATE': exitDate,
+      'LEAVE_TYPE': 'Extended Leave',
       'REASON': reason,
       'STATUS': 'Approved',
       'timestamp':
@@ -203,7 +234,7 @@ class FirebaseOperations {
   Stream<List<Map<String, dynamic>>> fetchVisitorRequests() {
     return FirebaseFirestore.instance
         .collection(
-            'visitor_requests') // Ensure this is the correct collection name
+            'visitor_requests') 
         .where('STATUS', isEqualTo: 'Approved') // Filter for approved visitors
         .snapshots()
         .map((snapshot) {

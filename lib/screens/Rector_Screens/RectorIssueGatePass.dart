@@ -154,7 +154,7 @@ class _RectorIssueGatePassState extends State<RectorIssueGatePass> {
                               borderRadius: BorderRadius.circular(50),
                             ),
                           ),
-                          child: Text('Request Leave',
+                          child: Text('Issue Leave',
                               style: TextStyle(color: Colors.white)),
                         ),
                       ],

@@ -27,12 +27,17 @@ class _GuardLoginState extends State<GuardLogin> {
   Future<void> _checkIfLoggedIn() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? enNum = prefs.getString('empId');
+    String? role = prefs.getString('role');
 
-    if (enNum != null) {
-      // Redirect to StudentNavbar if already logged in
+    if (enNum != null && role == "GUARD") {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => GuardNavBar()),
+      );
+    } else if (enNum != null && role == "RECTOR") {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => RectorNavBar()),
       );
     }
   }
@@ -54,6 +59,7 @@ class _GuardLoginState extends State<GuardLogin> {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString('empId', empId);
       String role = employee['ROLE'];
+      await prefs.setString('role', role);
       if (role == 'RECTOR') {
         Navigator.push(
           context,
