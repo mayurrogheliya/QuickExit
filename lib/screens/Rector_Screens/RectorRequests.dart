@@ -43,7 +43,7 @@ class _RectorRequestsState extends State<RectorRequests> {
 
   Future<String> getStudentFullName(String enNum) async {
     final firebaseOps =
-        FirebaseOperations(); // Assuming you have a FirebaseOperations class
+        FirebaseOperations(); 
     final studentData = await firebaseOps.getStudentData(enNum);
 
     if (studentData != null) {
@@ -60,7 +60,7 @@ class _RectorRequestsState extends State<RectorRequests> {
     return Scaffold(
       body: Column(
         children: [
-          Header(title: "Gate Pass Requests"), // Add Header at the top
+          Header(title: "Gate Pass Requests"), 
           Expanded(
             child: StreamBuilder(
               stream: FirebaseFirestore.instance
@@ -75,7 +75,6 @@ class _RectorRequestsState extends State<RectorRequests> {
 
                 return ListView(
                   children: snapshot.data!.docs.map((doc) {
-                    // Get the enrollment number
                     String enNum = doc['EN_NUM'];
 
                     // Use FutureBuilder to fetch student name asynchronously

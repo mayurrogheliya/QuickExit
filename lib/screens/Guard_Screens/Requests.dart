@@ -60,7 +60,7 @@ class _RequestsState extends State<Requests> {
     return Scaffold(
       body: Column(
         children: [
-          Header(title: "Gate Pass Requests"), // Add Header at the top
+          Header(title: "Gate Pass Requests"), 
           Expanded(
             child: StreamBuilder(
               stream: FirebaseFirestore.instance
@@ -75,7 +75,7 @@ class _RequestsState extends State<Requests> {
 
                 return ListView(
                   children: snapshot.data!.docs.map((doc) {
-                    // Get the enrollment number
+                   
                     String enNum = doc['EN_NUM'];
 
                     // Use FutureBuilder to fetch student name asynchronously
