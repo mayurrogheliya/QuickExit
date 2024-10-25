@@ -57,120 +57,126 @@ class _RequestsState extends State<Requests> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          Header(title: "Gate Pass Requests"), 
-          Expanded(
-            child: StreamBuilder(
-              stream: FirebaseFirestore.instance
-                  .collection('requests')
-                  .where('LEAVE_TYPE', isEqualTo: 'Intra-day Leave')
-                  .where('STATUS', isEqualTo: 'Pending') // Only pending status
-                  .snapshots(),
-              builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                if (!snapshot.hasData) {
-                  return Center(child: CircularProgressIndicator());
-                }
+    return SafeArea(
+      child: Scaffold(
+        body: Column(
+          children: [
+            Header(title: "Gate Pass Requests"),
+            Expanded(
+              child: StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection('requests')
+                    .where('LEAVE_TYPE', isEqualTo: 'Intra-day Leave')
+                    .where('STATUS',
+                        isEqualTo: 'Pending') // Only pending status
+                    .snapshots(),
+                builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (!snapshot.hasData) {
+                    return Center(child: CircularProgressIndicator());
+                  }
 
-                return ListView(
-                  children: snapshot.data!.docs.map((doc) {
-                   
-                    String enNum = doc['EN_NUM'];
+                  return ListView(
+                    children: snapshot.data!.docs.map((doc) {
+                      String enNum = doc['EN_NUM'];
 
-                    // Use FutureBuilder to fetch student name asynchronously
-                    return FutureBuilder<String>(
-                      future: getStudentFullName(enNum),
-                      builder: (context, AsyncSnapshot<String> nameSnapshot) {
-                        if (!nameSnapshot.hasData) {
-                          return Center(child: CircularProgressIndicator());
-                        }
+                      // Use FutureBuilder to fetch student name asynchronously
+                      return FutureBuilder<String>(
+                        future: getStudentFullName(enNum),
+                        builder: (context, AsyncSnapshot<String> nameSnapshot) {
+                          if (!nameSnapshot.hasData) {
+                            return Center(child: CircularProgressIndicator());
+                          }
 
-                        return Card(
-                          margin: EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 15),
-                          child: Padding(
-                            padding: EdgeInsets.all(16.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      '${nameSnapshot.data}',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w800),
-                                    ), // Display FNAME + LNAME
-                                    Text('Destination: ${doc['DESTI_CITY']}'),
-                                    Text('Exit Date: ${doc['EXIT_DATE']}'),
-                                    Text('Reason: ${doc['REASON']}'),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    SizedBox(width: 10),
-                                    // Reject button
-                                    Container(
-                                      height: 33,
-                                      width: 33,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: Colors.black,
-                                            width: 1,
-                                            style: BorderStyle.solid),
-                                        borderRadius: BorderRadius.circular(5),
-                                        color: Color(0x2B2D4238),
+                          return Card(
+                            margin: EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 15),
+                            child: Padding(
+                              padding: EdgeInsets.all(16.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        '${nameSnapshot.data}',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w800),
+                                      ), // Display FNAME + LNAME
+                                      Text('Destination: ${doc['DESTI_CITY']}'),
+                                      Text('Exit Date: ${doc['EXIT_DATE']}'),
+                                      Text('Reason: ${doc['REASON']}'),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      SizedBox(width: 10),
+                                      // Reject button
+                                      Container(
+                                        height: 33,
+                                        width: 33,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: Colors.black,
+                                              width: 1,
+                                              style: BorderStyle.solid),
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          color: Color(0x2B2D4238),
+                                        ),
+                                        child: IconButton(
+                                          icon: Icon(Icons.close,
+                                              color: Colors.black),
+                                          padding: EdgeInsets.zero,
+                                          onPressed: () {
+                                            updateRequestStatus(
+                                                doc.id, 'Rejected');
+                                          },
+                                        ),
                                       ),
-                                      child: IconButton(
-                                        icon: Icon(Icons.close,
-                                            color: Colors.black),
-                                        padding: EdgeInsets.zero,
-                                        onPressed: () {
-                                          updateRequestStatus(
-                                              doc.id, 'Rejected');
-                                        },
+                                      // Approve button
+                                      SizedBox(
+                                        width: 10,
                                       ),
-                                    ),
-                                    // Approve button
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Container(
-                                      height: 33,
-                                      width: 33,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: Colors.black,
-                                            width: 1,
-                                            style: BorderStyle.solid),
-                                        borderRadius: BorderRadius.circular(5),
-                                        color: Color(0xFFFF3B30),
+                                      Container(
+                                        height: 33,
+                                        width: 33,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: Colors.black,
+                                              width: 1,
+                                              style: BorderStyle.solid),
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          color: Color(0xFFFF3B30),
+                                        ),
+                                        child: IconButton(
+                                          icon: Icon(Icons.check,
+                                              color: Colors.white),
+                                          padding: EdgeInsets.zero,
+                                          onPressed: () {
+                                            updateRequestStatus(
+                                                doc.id, 'Approved');
+                                          },
+                                        ),
                                       ),
-                                      child: IconButton(
-                                        icon: Icon(Icons.check,
-                                            color: Colors.white),
-                                        padding: EdgeInsets.zero,
-                                        onPressed: () {
-                                          updateRequestStatus(
-                                              doc.id, 'Approved');
-                                        },
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        );
-                      },
-                    );
-                  }).toList(),
-                );
-              },
+                          );
+                        },
+                      );
+                    }).toList(),
+                  );
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
