@@ -79,9 +79,9 @@ You can watch the [QuickExit Demo Video here](https://youtu.be/IeBV-73WEWU).
 
 
 ## Contributors
-- **Dhruv Burada** 
-- **Paul Lawrence** 
-- **Mayur Rogheliya** 
+- [@DhruvBurada](https://github.com/dhruvburada)
+- [@PaulLawrence](https://github.com/PaulStephenL)
+- [@MayurRogheliya](https://github.com/mayurrogheliya)
 
 ---
 
