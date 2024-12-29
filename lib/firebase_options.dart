@@ -3,6 +3,7 @@
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -46,31 +47,30 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDUEFNsfnUxnneuy-JuhyUMXsmGZRu1jHE',
-    appId: '1:109249628543:web:8ec9d6c60ff34e512d324a',
-    messagingSenderId: '109249628543',
-    projectId: 'quickexit-a4191',
-    authDomain: 'quickexit-a4191.firebaseapp.com',
-    storageBucket: 'quickexit-a4191.appspot.com',
-    measurementId: 'G-NTPDTF66YW',
-  );
+  static FirebaseOptions get web => FirebaseOptions(
+        apiKey: dotenv.env['FIREBASE_WEB_API_KEY'] ?? '',
+        appId: dotenv.env['FIREBASE_WEB_APP_ID'] ?? '',
+        messagingSenderId: dotenv.env['FIREBASE_MESSAGING_SENDER_ID'] ?? '',
+        projectId: dotenv.env['FIREBASE_PROJECT_ID'] ?? '',
+        authDomain: dotenv.env['FIREBASE_AUTHDOMAIN'],
+        storageBucket: dotenv.env['FIREBASE_STORAGE_BUCKET'],
+        measurementId: dotenv.env['FIREBASE_MEASUREMENT_ID'],
+      );
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDY3UyvkD25E_Wq_I9qcFZyMYFNLPo-CiU',
-    appId: '1:109249628543:android:d234165738bb94ac2d324a',
-    messagingSenderId: '109249628543',
-    projectId: 'quickexit-a4191',
-    storageBucket: 'quickexit-a4191.appspot.com',
-  );
+  static FirebaseOptions get android => FirebaseOptions(
+        apiKey: dotenv.env['FIREBASE_ANDROID_API_KEY'] ?? '',
+        appId: dotenv.env['FIREBASE_ANDROID_APP_ID'] ?? '',
+        messagingSenderId: dotenv.env['FIREBASE_MESSAGING_SENDER_ID'] ?? '',
+        projectId: dotenv.env['FIREBASE_PROJECT_ID'] ?? '',
+        storageBucket: dotenv.env['FIREBASE_STORAGE_BUCKET'],
+      );
 
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCBYgxbNwJuYRUF7Gh-F3r7uM8g0B2XaOo',
-    appId: '1:109249628543:ios:a2478a627f906fba2d324a',
-    messagingSenderId: '109249628543',
-    projectId: 'quickexit-a4191',
-    storageBucket: 'quickexit-a4191.appspot.com',
-    iosBundleId: 'com.example.quickExit',
-  );
-
+  static FirebaseOptions get ios => FirebaseOptions(
+        apiKey: dotenv.env['FIREBASE_IOS_API_KEY'] ?? '',
+        appId: dotenv.env['FIREBASE_IOS_APP_ID'] ?? '',
+        messagingSenderId: dotenv.env['FIREBASE_MESSAGING_SENDER_ID'] ?? '',
+        projectId: dotenv.env['FIREBASE_PROJECT_ID'] ?? '',
+        storageBucket: dotenv.env['FIREBASE_STORAGE_BUCKET'],
+        iosBundleId: 'com.example.quickExit',
+      );
 }

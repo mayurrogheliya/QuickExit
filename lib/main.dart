@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:quick_exit/firebase_options.dart';
 import 'package:quick_exit/screens/StudentLogin.dart';
 import 'package:quick_exit/screens/splash_screen.dart';
-// import 'package:quick_exit/screens/StudentLogin.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: "../.env");
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
